@@ -16,6 +16,9 @@ def crawler(depth):
     discarded_url_file = open("log/discarded.txt","w")
     visited_url_file = open("log/visted.txt","w")
     exist_url_file = open("log/exist.txt","w")
+
+    graph_file = open("graph/graph.txt","w")
+    key_file   = open("graph/key-value.txt","w")
     seedurl = ""
     for url in file:
         seedurl = url.strip()
@@ -29,6 +32,7 @@ def crawler(depth):
             break
 
         hex = hashlib.sha224(url).hexdigest()
+        key_file.write(hex[:16]+"\t"+url)
         filename = "cached/"+hex[:16]+".cached"
         print filename
 
@@ -56,6 +60,7 @@ def crawler(depth):
                 if urlparse(seedurl).netloc in urlparse(newurl).netloc:
                     visited.add(newurl)
                     levelQ.put(level+1)
+                    graph_file.write(url+":==:"+text+":==:"+newurl+"\n")
                     q.put(newurl)
                 else:
                     discarded_url_file.write(newurl+"\n")
@@ -65,6 +70,8 @@ def crawler(depth):
     discarded_url_file.close()
     visited_url_file.close()
     exist_url_file.close()
+    graph_file.close()
+    key_file.close()
 
 if __name__ == "__main__":
     depth = sys.argv[1]
