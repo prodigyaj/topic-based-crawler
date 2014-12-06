@@ -5,7 +5,14 @@ import bs4
 import urllib2
 import hashlib
 import pprint
+from random import randint
+import time
 
+def bePolite(should_i,random = 2):
+    if should_i == True:
+        randseed = randint(1,random)
+        time.sleep(randomseed)
+    
 
 def crawler(depth):
     pp = pprint.PrettyPrinter()
@@ -95,6 +102,8 @@ def crawler(depth):
                 #print pp.pprint(visited)
                 pprint.pprint("level: "+str(level),visited_url_file)
                 pprint.pprint(visited,visited_url_file)
+                if not os.path.isfile(filename):
+                    bePolite(true,3)
             except:
                 exception_file.write("Exception in finding anchor tags:",url,filename)
                 continue
