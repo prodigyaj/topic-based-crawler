@@ -1,0 +1,4 @@
+*.swp
+bs4/
+log/*
+cached/
