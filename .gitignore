@@ -3,3 +3,4 @@ bs4/
 log/*
 cached/
 graph/
+neo4j-webgraph-code/*.txt
