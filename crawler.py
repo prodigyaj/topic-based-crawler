@@ -20,6 +20,7 @@ def crawler(depth):
     levelQ = Queue.Queue()
     visited = set()
     file = open("seed.txt")
+    domain_reg_file = open("regexseed.txt","r")
     discarded_url_file = open("log/discarded.txt","w")
     visited_url_file = open("log/visted.txt","w")
     exist_url_file = open("log/exist.txt","w")
@@ -28,6 +29,9 @@ def crawler(depth):
     graph_file = open("graph/graph.txt","w")
     key_file   = open("graph/key-value.txt","w")
     seedurl = ""
+    domain = []
+    for domain_list in domain_reg_file:
+        domain.append(domain_list.strip())
     for url in file:
         seedurl = url.strip()
         q.put(seedurl)
@@ -90,14 +94,16 @@ def crawler(depth):
                     text = anchor.text.strip()
                     #print newurl
                     if newurl not in visited:
-                        from urlparse import urlparse
-                        if urlparse(seedurl).netloc in urlparse(newurl).netloc:
-                            visited.add(newurl)
-                            levelQ.put(level+1)
-                            graph_file.write(url+":==:"+text+":==:"+newurl+"\n")
-                            q.put(newurl)
-                        else:
-                            discarded_url_file.write(newurl+"\n")
+                        for domain_url in domain:
+                            from urlparse import urlparse
+                            if urlparse(domain_url).netloc in urlparse(newurl).netloc:
+                                #print urlparse(domain_url).netloc
+                                visited.add(newurl)
+                                levelQ.put(level+1)
+                                graph_file.write(url+":==:"+text+":==:"+newurl+"\n")
+                                q.put(newurl)
+                            else:
+                                discarded_url_file.write(newurl+"\n")
                 #print webpage
                 #print pp.pprint(visited)
                 pprint.pprint("level: "+str(level),visited_url_file)
