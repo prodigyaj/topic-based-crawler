@@ -14,6 +14,7 @@ from live_faculty_predictor import *
 
 def snapshot_crawler(depth,directory=""):
     faculty_link_file = open("faculty_link","w")
+    other_link_file = open("other_link","w")
     pred = FacultyPredictor()
     q = Queue.Queue()
     aq = Queue.Queue()
@@ -64,6 +65,8 @@ def snapshot_crawler(depth,directory=""):
                     if label == 0:
                         #print "result:",anchor_append,":done"
                         faculty_link_file.write(anchor_append+"\n")
+                    else:
+                        other_link_file.write(anchor_append+"\n")
                 except:
                     exception_file.write("Exception in opening existing file:",url,filename)
                     continue
