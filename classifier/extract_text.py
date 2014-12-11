@@ -1,7 +1,6 @@
 from config import *
 import sys
 sys.path.append(beautiful_soup_path)
-ssy.path.appen("/srv/data/anair10/cs598/setups/html5lib-0.999")
 
 import os
 import bs4
@@ -29,11 +28,11 @@ else:
             #print unclean_file.read()
 
             soup = bs4.BeautifulSoup(unclean_file.read())
-            #new_path = os.path.join(extract_output_location,directory)
-            #new_file_path = os.path.join(new_path,html_file)
-            #clean_file = open(new_file_path,"w")
-            #clean_file.write(soup.get_text())
-            #clean_file.close()
+            new_path = os.path.join(extract_output_location,directory)
+            new_file_path = os.path.join(new_path,html_file)
+            clean_file = open(new_file_path,"w")
+            clean_file.write(soup.get_text().encode("ascii","ignore"))
+            clean_file.close()
 
             #except:
             #    print "Unexpected error:", sys.exc_info()[0]
